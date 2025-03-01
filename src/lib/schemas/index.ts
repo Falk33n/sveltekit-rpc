@@ -1,19 +1,9 @@
 import { z } from 'zod';
 
-export {
-	authenticatePayloadSchema,
-	authenticateReturnSchema,
-	type AuthenticatePayload,
-	type AuthenticateReturnType,
-} from './auth';
-export {
-	userGetPayloadSchema,
-	userGetReturnSchema,
-	type UserGetPayload,
-	type UserGetReturnType,
-} from './user';
+export { authenticateInputSchema, authenticateOutputSchema } from './auth';
+export { userGetInputSchema, userGetOutputSchema } from './user';
 
-export const routerReturnSchema = z.object({
+export const routerBaseOutputSchema = z.object({
 	status: z
 		.number({
 			required_error: 'Status is required.',

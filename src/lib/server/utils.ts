@@ -35,7 +35,11 @@ export const callCorrectEndpoint = async (event: RouterEvent) => {
 		error(404, 'The endpoint was not found.');
 	}
 
-	const { status, message, data } = await callFunction(event, payload);
+	const { status, message, data } = (await callFunction(event, payload)) as {
+		status: number;
+		message: string;
+		data: {};
+	};
 
 	if (status > 399) {
 		error(status, message);

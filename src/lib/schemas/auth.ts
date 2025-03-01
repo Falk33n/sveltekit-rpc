@@ -1,7 +1,7 @@
-import { routerReturnSchema } from '$schemas';
+import { routerBaseOutputSchema } from '$schemas';
 import { z } from 'zod';
 
-export const authenticatePayloadSchema = z.object({
+export const authenticateInputSchema = z.object({
 	email: z
 		.string({
 			required_error: 'Email is required.',
@@ -11,9 +11,7 @@ export const authenticatePayloadSchema = z.object({
 		.email('Email must be of a valid email format.'),
 });
 
-export type AuthenticatePayload = z.infer<typeof authenticatePayloadSchema>;
-
-export const authenticateReturnSchema = routerReturnSchema.extend({
+export const authenticateOutputSchema = routerBaseOutputSchema.extend({
 	data: z
 		.object({
 			authenticated: z
@@ -25,7 +23,3 @@ export const authenticateReturnSchema = routerReturnSchema.extend({
 		})
 		.optional(),
 });
-
-export type AuthenticateReturnType = Promise<
-	z.infer<typeof authenticateReturnSchema>
->;

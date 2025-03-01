@@ -1,11 +1,13 @@
+import { routerBaseOutputSchema } from '$schemas';
 import type { rootRouter } from '$server/root';
 import type { RequestHandler } from '@sveltejs/kit';
+import type { z } from 'zod';
 
 type EndpointTypes = typeof rootRouter;
 
 export type RouterEvent = Parameters<RequestHandler>[0];
 
-type RouterReturnObject = { status: number; message?: string; data?: any };
+type RouterOutput = z.infer<typeof routerBaseOutputSchema>;
 
 export type HttpMethod =
 	| 'get'
@@ -16,14 +18,20 @@ export type HttpMethod =
 	| 'options'
 	| 'head';
 
+export type OutputSchema<T extends z.ZodTypeAny> = z.ZodObject<
+	typeof routerBaseOutputSchema.shape & T['_def']['shape']
+>;
+
 export type RouterFunction = (
 	event: RouterEvent,
-	payload: any,
-) => Promise<RouterReturnObject>;
+	input: any,
+) => Promise<unknown>;
 
 export type Router = Record<
 	string,
-	Partial<Record<HttpMethod, RouterFunction>>
+	Record<'inputSchema', z.ZodSchema<any>> &
+		Record<'outputSchema', OutputSchema<any>> &
+		Partial<Record<HttpMethod, RouterFunction>>
 >;
 
 export type RootRouter = Record<string, Router>;
@@ -34,29 +42,29 @@ export type RouterEndpoints = {
 	[K in EndpointRouters]: `${K}/${Extract<keyof EndpointTypes[K], string>}`;
 }[EndpointRouters];
 
-export type RouterReturnType<T extends RouterEndpoints> =
+export type RouterOutputType<T extends RouterEndpoints> =
 	T extends `${infer Router}/${infer Endpoint}`
 		? Router extends EndpointRouters
 			? Endpoint extends keyof EndpointTypes[Router]
 				? EndpointTypes[Router][Endpoint] extends (
 						event: RouterEvent,
-						payload: any,
-					) => Promise<infer R>
-					? R
+						input: any,
+					) => Promise<infer O>
+					? O
 					: never
 				: never
 			: never
 		: never;
 
-export type RouterPayload<T extends RouterEndpoints> =
+export type RouterInputType<T extends RouterEndpoints> =
 	T extends `${infer Router}/${infer Endpoint}`
 		? Router extends EndpointRouters
 			? Endpoint extends keyof EndpointTypes[Router]
 				? EndpointTypes[Router][Endpoint] extends (
 						event: RouterEvent,
-						payload: infer P,
-					) => Promise<RouterReturnObject>
-					? P
+						input: infer I,
+					) => Promise<RouterOutput>
+					? I
 					: never
 				: never
 			: never

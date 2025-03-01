@@ -1,7 +1,7 @@
-import { routerReturnSchema } from '$schemas';
+import { routerBaseOutputSchema } from '$schemas';
 import { z } from 'zod';
 
-export const userGetPayloadSchema = z.object({
+export const userGetInputSchema = z.object({
 	id: z
 		.string({
 			required_error: 'ID is required.',
@@ -10,9 +10,7 @@ export const userGetPayloadSchema = z.object({
 		.nonempty('ID can not be empty.'),
 });
 
-export type UserGetPayload = z.infer<typeof userGetPayloadSchema>;
-
-export const userGetReturnSchema = routerReturnSchema.extend({
+export const userGetOutputSchema = routerBaseOutputSchema.extend({
 	data: z
 		.object({
 			id: z
@@ -30,5 +28,3 @@ export const userGetReturnSchema = routerReturnSchema.extend({
 		})
 		.optional(),
 });
-
-export type UserGetReturnType = Promise<z.infer<typeof userGetReturnSchema>>;
