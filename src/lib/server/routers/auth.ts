@@ -1,12 +1,18 @@
-import { authenticateInputSchema, authenticateOutputSchema } from '$schemas';
-import type { Router } from '$server/types';
+import { userGetInputSchema, userGetOutputSchema } from '$lib/schemas';
+import { createRouter, publicProcedure } from '../router-utils';
 
-export const authRouter = {
+export const authRouter = createRouter({
 	authenticate: {
-		inputSchema: authenticateInputSchema,
-		outputSchema: authenticateOutputSchema,
-		post: async (event, input) => {
-			return { status: 200, data: { authenticated: true } };
-		},
+		method: 'get',
+		handler: publicProcedure
+			.input(userGetInputSchema)
+			.output(userGetOutputSchema)
+			.resolve(async (event, input) => {
+				return {
+					status: 200,
+					data: { id: '123', name: 'hanna' },
+					message: 'OK',
+				};
+			}),
 	},
-} satisfies Router;
+});
