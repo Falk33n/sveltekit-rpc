@@ -1,35 +1,35 @@
+import { callRouter } from '$lib/server/caller';
 import { text, type RequestHandler } from '@sveltejs/kit';
-/* 
-import { callServerRouter } from '$server/router-utils';
 
 // Only export the methods that is actually available in your app router.
 
-export const GET: RequestHandler = async (event) => {
-	return await callServerRouter(event);
+export const POST: RequestHandler = async (event) => {
+	return await callRouter(event);
 };
 
-export const POST: RequestHandler = async (event) => {
-	return await callServerRouter(event);
+/*
+export const GET: RequestHandler = async (event) => {
+	return await callRouter(event);
 };
 
 export const DELETE: RequestHandler = async (event) => {
-	return await callServerRouter(event);
+	return await callRouter(event);
 };
 
 export const PUT: RequestHandler = async (event) => {
-	return await callServerRouter(event);
+	return await callRouter(event);
 };
 
 export const PATCH: RequestHandler = async (event) => {
-	return await callServerRouter(event);
+	return await callRouter(event);
 };
 
 export const OPTIONS: RequestHandler = async (event) => {
-	return await callServerRouter(event);
+	return await callRouter(event);
 };
 
 export const HEAD: RequestHandler = async (event) => {
-	return await callServerRouter(event);
+	return await callRouter(event);
 }; 
 */
 

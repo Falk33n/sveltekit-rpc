@@ -1,7 +1,7 @@
-import { routerBaseOutputSchema } from '$schemas';
 import { z } from 'zod';
+import { routerBaseOutputSchema } from './index';
 
-export const userGetInputSchema = z.object({
+export const exampleInputSchema = z.object({
 	id: z
 		.string({
 			required_error: 'ID is required.',
@@ -10,7 +10,7 @@ export const userGetInputSchema = z.object({
 		.nonempty('ID can not be empty.'),
 });
 
-export const userGetOutputSchema = routerBaseOutputSchema.extend({
+export const exampleOutputSchema = routerBaseOutputSchema.extend({
 	data: z
 		.object({
 			id: z

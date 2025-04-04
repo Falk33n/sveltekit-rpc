@@ -1,5 +1,16 @@
+# Packages
+node_modules
+
 # Package Managers
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+bun.lock
 bun.lockb
+
+# Output
+/.svelte-kit
+
+# Env
+.env.*
+!.env.example

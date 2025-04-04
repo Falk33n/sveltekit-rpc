@@ -1,2 +1,3 @@
-export { authRouter } from './auth';
-export { userRouter } from './user';
+import { exampleRouter } from './example';
+
+export { exampleRouter };
