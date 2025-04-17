@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+/** The base output schema of each endpoint. */
 export const routerBaseOutputSchema = z.object({
 	status: z
 		.number({

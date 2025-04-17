@@ -1,7 +1,7 @@
 import { callRouter } from '$lib/server/caller';
 import { text, type RequestHandler } from '@sveltejs/kit';
 
-// Only export the methods that is actually available in your app router.
+// Only export the methods that is actually available in your `appRouter`.
 
 export const POST: RequestHandler = async (event) => {
 	return await callRouter(event);

@@ -1,11 +1,14 @@
 import { error, json } from '@sveltejs/kit';
 import type { z } from 'zod';
 import type { routerBaseOutputSchema } from '../schemas';
-import { appRouter, type AppRouter } from './root';
+import { appRouter } from './root';
 import type { ProcedureFunction, RouteEvent } from './setup';
 
-function isValidEndpoint(router: any, endpoint: string): boolean {
+/** Function that validates if the given `endpoint` exists in the given `router`. */
+function isValidEndpoint(router: unknown, endpoint: string) {
 	const parts = endpoint.split('/');
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let current: any = router;
 
 	for (let i = 0; i < parts.length - 1; i++) {
@@ -16,14 +19,10 @@ function isValidEndpoint(router: any, endpoint: string): boolean {
 	return parts[parts.length - 1] in current;
 }
 
-type FlattenRouter<T> = {
-	[K in Extract<keyof T, string | number>]: T[K] extends Record<string, any>
-		? `${K}.${Extract<keyof T[K], string | number>}`
-		: K;
-}[Extract<keyof T, string | number>];
-
-export type AppRouterEndpoints = FlattenRouter<AppRouter>;
-
+/**
+ * Function that executes the correct endpoint from the given `event.params.endpoints` slug.
+ * This is the function that gets called in each `SvelteKit` `+server.ts` endpoint.
+ */
 export async function callRouter(event: RouteEvent) {
 	const endpoints = event.params.endpoints;
 
@@ -35,6 +34,7 @@ export async function callRouter(event: RouteEvent) {
 
 	const input = (await event.request.json()) as unknown;
 
+	// Calls the correct endpoint of the appRouter.
 	const response = await (
 		appRouter[route as never][endpoint]['handler'] as ProcedureFunction<
 			typeof input,
