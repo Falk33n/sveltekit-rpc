@@ -1,7 +1,7 @@
 MIT License
 
-Copyright (c) 2025 [Falk33n](https://github.com/Falk33n)
-Copyright (c) 2025 [nilspettersson](https://github.com/nilspettersson)
+Copyright (c) 2025 [Falk33n](https://github.com/Falk33n).
+Copyright (c) 2025 [nilspettersson](https://github.com/nilspettersson).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
